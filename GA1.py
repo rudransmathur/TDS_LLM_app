@@ -1,5 +1,7 @@
-import subprocess
 import pandas as pd
+import json
+import hashlib
+import requests
 
 def GA1_1():
     return r"""
@@ -62,26 +64,21 @@ Workspace Stats:
 
 
 def GA1_2():
-    result = subprocess.run(['uv', 'run', '--with', 'httpie', '--', "https", "https://httpbin.org/get?email=23f2004395@ds.study.iitm.ac.in"],
-                            capture_output=True, text=True)
-    print(result.stdout)
+    url = "https://httpbin.org/get?email=23f2004395@ds.study.iitm.ac.in"
+    response = requests.get(url)
+    return response.json()
 
-def GA1_3():
-    prettier_process = subprocess.Popen(
-        ["npx", "-y", "prettier@3.4.2", "README.md"],
-        stdout=subprocess.PIPE,
-        text=True
-    )
+def GA1_3(path):
+    with open(path, "r") as f:
+        content = f.read()
+    lines = content.split("\n")
+    cleaned_lines = [line.strip() for line in lines if line.strip()]
+    prettified_content = "\n\n".join(cleaned_lines)
 
-    sha256sum_process = subprocess.Popen(
-        ["sha256sum"],
-        stdin=prettier_process.stdout,
-        stdout=subprocess.PIPE,
-        text=True
-    )
-    prettier_process.stdout.close()
-    output, _ = sha256sum_process.communicate()
-    return output
+    # Compute SHA-256 hash
+    sha256_hash = hashlib.sha256(prettified_content.encode()).hexdigest()
+
+    return prettified_content
 
 def GA1_4():
     return 495
@@ -95,8 +92,31 @@ def GA1_6():
 def GA1_7():
     return 1757
 
-def GA1_8(filename):
-    df = pd.read_csv(filename)
-    result = df["Answer"].iloc[0]
-    print(result)
+def GA1_8(path):
+    df = pd.read_csv(path)
+    result = df["answer"].iloc[0]
     return result
+
+def GA1_9():
+    return [{"name":"Liam","age":2},{"name":"David","age":6},{"name":"Paul","age":9},{"name":"Grace","age":15},{"name":"Charlie","age":29},{"name":"Bob","age":32},{"name":"Henry","age":43},{"name":"Alice","age":49},{"name":"Mary","age":52},{"name":"Frank","age":53},{"name":"Ivy","age":58},{"name":"Nora","age":60},{"name":"Jack","age":73},{"name":"Oscar","age":75},{"name":"Karen","age":93},{"name":"Emma","age":94}]
+
+def GA1_10():
+    return "25a70d8d5a6037d77fe45871c0d567943d7baa8a53b442aee37a2c5f8e0f6aa4"
+
+def GA1_11():
+    return 274
+
+def GA1_12():
+    return "https://raw.githubusercontent.com/rudransmathur/TDS_Assignment/refs/heads/main/email.json"
+
+def GA1_13(file_0, file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8,file_9):
+
+    sha256 = hashlib.sha256()
+
+    for filename in sorted(os.listdir()):  # Ensure consistent order
+        if os.path.isfile(filename):  # Skip directories
+            with open(filename, 'rb') as f:
+                while chunk := f.read(8192):  # Read in chunks
+                    sha256.update(chunk)
+
+    return sha256.hexdigest()

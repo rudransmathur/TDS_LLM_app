@@ -1,14 +1,15 @@
 from fastapi import FastAPI, HTTPException, Form, File, UploadFile, Depends
 import zipfile
+import shutil
 from dotenv import load_dotenv
 import requests
-from io import BytesIO
 import os
 
 from Func_def import *
 
 from GA1 import *
 
+UPLOAD_FOLDER = "uploads"
 app = FastAPI()
 load_dotenv()
 
@@ -27,11 +28,19 @@ async def root(
     question: str = Form(...),
     file: UploadFile | None = File(None)  # Optional file
 ):
-    # Handle file if provided
     if file:
-        contents = await file.read()
-    else:
-        contents = None  # No file uploaded
+        # Normal File
+        file_location = f"{UPLOAD_FOLDER}/{file.filename}"
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        with open(file_location, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        # Zip Files
+        if file.filename.endswith(".zip"):
+            extract_folder = file_location.replace(".zip", "")
+            with zipfile.ZipFile(file_location, "r") as zip_ref:
+                zip_ref.extractall(extract_folder)
+
 
     # Prepare payload for ChatGPT API
     payload = {
@@ -39,7 +48,7 @@ async def root(
         "messages": [
             {
                 "role": "system",
-                "content": "A question would be given to you"
+                "content": "A question would be given to you. Return the function name of the function it belongs to."
             },
             {
                 "role": "user",
@@ -75,70 +84,21 @@ async def root(
     }
 
     # Send request to ChatGPT API
-    # response = requests.post(post_url, headers=headers, json=payload)
+    response = requests.post(post_url, headers=headers, json=payload)
 
     # Extract and return the response from the API
-    # response_data = response.json()
-    response_data = {
-  "result": {
-    "id": "chatcmpl-BH32dsc3kFprEFzu83YLnucsG3k3X",
-    "object": "chat.completion",
-    "created": 1743402967,
-    "model": "gpt-4o-mini-2024-07-18",
-    "choices": [
-      {
-        "index": 0,
-        "message": {
-          "role": "assistant",
-          "content": None,
-          "tool_calls": [
-            {
-              "id": "call_Bg9UN65hSu7S4lq0rWzFhvvJ",
-              "type": "function",
-              "function": {
-                "name": "GA1_1",
-                "arguments": "{\"answer\":\"{\\\"args\\\":{\\\"email\\\":\\\"23f2004395@ds.study.iitm.ac.in\\\"},\\\"headers\\\":{\\\"Accept\\\":\\\"*/*\\\",\\\"Host\\\":\\\"httpbin.org\\\",\\\"User-Agent\\\":\\\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3\\\"},\\\"origin\\\":\\\"<your_ip_address>\\\",\\\"url\\\":\\\"https://httpbin.org/get?email=23f2004395@ds.study.iitm.ac.in\\\"}\"}"
-              }
-            }
-          ],
-          "refusal": None,
-          "annotations": []
-        },
-        "logprobs": None,
-        "finish_reason": "tool_calls"
-      }
-    ],
-    "usage": {
-      "prompt_tokens": 1039,
-      "completion_tokens": 137,
-      "total_tokens": 1176,
-      "prompt_tokens_details": {
-        "cached_tokens": 0,
-        "audio_tokens": 0
-      },
-      "completion_tokens_details": {
-        "reasoning_tokens": 0,
-        "audio_tokens": 0,
-        "accepted_prediction_tokens": 0,
-        "rejected_prediction_tokens": 0
-      }
-    },
-    "service_tier": "default",
-    "system_fingerprint": "fp_86d0290411",
-    "monthlyCost": 0.00732,
-    "cost": 0.003939,
-    "monthlyRequests": 3,
-    "costError": "crypto.createHash is not a function"
-  }
-}
+    response_data = response.json()
+    print(response_data)
     # final_resp = response_data["choices"][0]["message"]["tool_calls"][0]["function"]["name"]
-    final_resp = "GA1_2"
+    final_resp = "GA1_3"
+
+
     if final_resp == "GA1_1":
         result = GA1_1()
     if final_resp == "GA1_2":
         result = GA1_2()
     if final_resp == "GA1_3":
-        result = GA1_3()
+        result = GA1_3(file_location)
     if final_resp == "GA1_4":
         result = GA1_4()
     if final_resp == "GA1_5":
@@ -148,7 +108,8 @@ async def root(
     if final_resp == "GA1_7":
         result = GA1_7()
     if final_resp == "GA1_8":
-        result = GA1_8()
+        csv_path = os.path.join(extract_folder, "extract.csv")
+        result = GA1_8(csv_path)
     if final_resp == "GA1_9":
         result = GA1_9()
     if final_resp == "GA1_10":
@@ -160,7 +121,17 @@ async def root(
     if final_resp == "GA1_13":
         result = GA1_13()
     if final_resp == "GA1_14":
-        result = GA1_14()
+        file_0 = os.path.join(extract_folder, "file0.txt")
+        file_1 = os.path.join(extract_folder, "file1.txt")
+        file_2 = os.path.join(extract_folder, "file2.txt")
+        file_3 = os.path.join(extract_folder, "file3.txt")
+        file_4 = os.path.join(extract_folder, "file4.txt")
+        file_5 = os.path.join(extract_folder, "file5.txt")
+        file_6 = os.path.join(extract_folder, "file6.txt")
+        file_7 = os.path.join(extract_folder, "file7.txt")
+        file_8 = os.path.join(extract_folder, "file8.txt")
+        file_9 = os.path.join(extract_folder, "file9.txt")
+        result = GA1_14(file_0, file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8,file_9)
     if final_resp == "GA1_15":
         result = GA1_15()
     if final_resp == "GA1_16":
@@ -171,7 +142,7 @@ async def root(
         result = GA1_18()
 
     return {
-  "answer": str(result)
+  "answer": result
 }
 
 
