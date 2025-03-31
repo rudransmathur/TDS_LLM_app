@@ -1,7 +1,8 @@
 import subprocess
+import pandas as pd
 
 def GA1_1():
-    return """
+    return r"""
     Version:          Code 1.98.2 (ddc367ed5c8936efe395cffeec279b04ffd7db78, 2025-03-12T13:32:45.399Z)
 OS Version:       Windows_NT x64 10.0.22631
 CPUs:             AMD Ryzen 5 7530U with Radeon Graphics          (12 x 1996)
@@ -57,7 +58,7 @@ Workspace Stats:
 |    Folder (ChurnPrediction): 8 files
 |      File types: py(2) csv(1) pkl(1) md(1) html(1)
 |      Conf files:
-    """
+        """
 
 
 def GA1_2():
@@ -95,3 +96,7 @@ def GA1_7():
     return 1757
 
 def GA1_8(filename):
+    df = pd.read_csv(filename)
+    result = df["Answer"].iloc[0]
+    print(result)
+    return result

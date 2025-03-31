@@ -10,7 +10,7 @@ schema = {
         }
     },
     "required": ["answer"],
-    "additionalProperties": "false"
+    "additionalProperties": False
 }
 
 # GA1 Function Definitions
