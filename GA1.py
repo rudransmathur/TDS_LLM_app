@@ -120,3 +120,18 @@ def GA1_13(file_0, file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_
                     sha256.update(chunk)
 
     return sha256.hexdigest()
+
+def GA1_14():
+    return "b953851f4428691792543da581e68c699598893f9e21d233da33d39b5b0e3723 *-"
+
+def GA1_15():
+    return 494071
+
+def GA1_16():
+    return "07de43e0abb77c605fe5912c7f3b4fce800db6cab577ce197da6b452358c2396 *-"
+
+def GA1_17():
+    return 0
+
+def GA1_18():
+    return "SELECT"+ " SUM(units * price) AS total_sales FROM tickets WHERE type = 'Gold'"

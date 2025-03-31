@@ -96,7 +96,35 @@ async def root(
     except KeyError:
         final_resp = response_data["choices"][0]["message"]["content"]
     # final_resp = "GA1_3"
-    if "GA1_1"in final_resp:
+    if "GA1_10" in final_resp:
+        result = GA1_10()
+    elif "GA1_11" in final_resp:
+        result = GA1_11()
+    elif "GA1_12" in final_resp:
+        result = GA1_12()
+    elif "GA1_13" in final_resp:
+        result = GA1_13()
+    elif "GA1_14" in final_resp:
+        file_0 = os.path.join(extract_folder, "file0.txt")
+        file_1 = os.path.join(extract_folder, "file1.txt")
+        file_2 = os.path.join(extract_folder, "file2.txt")
+        file_3 = os.path.join(extract_folder, "file3.txt")
+        file_4 = os.path.join(extract_folder, "file4.txt")
+        file_5 = os.path.join(extract_folder, "file5.txt")
+        file_6 = os.path.join(extract_folder, "file6.txt")
+        file_7 = os.path.join(extract_folder, "file7.txt")
+        file_8 = os.path.join(extract_folder, "file8.txt")
+        file_9 = os.path.join(extract_folder, "file9.txt")
+        result = GA1_14(file_0, file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8, file_9)
+    elif "GA1_15" in final_resp:
+        result = GA1_15()
+    elif "GA1_16" in final_resp:
+        result = GA1_16()
+    elif "GA1_17" in final_resp:
+        result = GA1_17()
+    elif "GA1_18" in final_resp:
+        result = GA1_18()
+    elif "GA1_1"in final_resp:
         result = GA1_1()
     elif "GA1_2"in final_resp:
         result = GA1_2()
@@ -115,38 +143,8 @@ async def root(
         result = GA1_8(csv_path)
     elif "GA1_9"in final_resp:
         result = GA1_9()
-    elif "GA1_10"in final_resp:
-        result = GA1_10()
-    elif "GA1_11"in final_resp:
-        result = GA1_11()
-    elif "GA1_12"in final_resp:
-        result = GA1_12()
-    elif "GA1_13"in final_resp:
-        result = GA1_13()
-    elif "GA1_14"in final_resp:
-        file_0 = os.path.join(extract_folder, "file0.txt")
-        file_1 = os.path.join(extract_folder, "file1.txt")
-        file_2 = os.path.join(extract_folder, "file2.txt")
-        file_3 = os.path.join(extract_folder, "file3.txt")
-        file_4 = os.path.join(extract_folder, "file4.txt")
-        file_5 = os.path.join(extract_folder, "file5.txt")
-        file_6 = os.path.join(extract_folder, "file6.txt")
-        file_7 = os.path.join(extract_folder, "file7.txt")
-        file_8 = os.path.join(extract_folder, "file8.txt")
-        file_9 = os.path.join(extract_folder, "file9.txt")
-        result = GA1_14(file_0, file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8,file_9)
-    elif "GA1_15"in final_resp:
-        result = GA1_15()
-    elif "GA1_16"in final_resp:
-        result = GA1_16()
-    elif "GA1_17"in final_resp:
-        result = GA1_17()
-    elif "GA1_18"in final_resp:
-        result = GA1_18()
 
-    return {
-  "answer": result
-}
+    return {"answer": result}
 
 
 if __name__ == "__main__":
