@@ -28,6 +28,8 @@ async def root(
     question: str = Form(...),
     file: UploadFile | None = File(None)  # Optional file
 ):
+    file_location = None  # Define file_location before using it
+    extract_folder = None  # Also define extract_folder for safety
     if file:
         # Normal File
         file_location = f"{UPLOAD_FOLDER}/{file.filename}"
@@ -48,7 +50,7 @@ async def root(
         "messages": [
             {
                 "role": "system",
-                "content": "A question would be given to you. Return the function name of the function it belongs to."
+                "content": "A question would be given to you. Only return the function name of the function description it belongs to."
             },
             {
                 "role": "user",
@@ -89,38 +91,39 @@ async def root(
     # Extract and return the response from the API
     response_data = response.json()
     print(response_data)
-    # final_resp = response_data["choices"][0]["message"]["tool_calls"][0]["function"]["name"]
-    final_resp = "GA1_3"
-
-
-    if final_resp == "GA1_1":
+    try:
+        final_resp = response_data["choices"][0]["message"]["tool_calls"][0]["function"]["name"]
+    except KeyError:
+        final_resp = response_data["choices"][0]["message"]["content"]
+    # final_resp = "GA1_3"
+    if "GA1_1"in final_resp:
         result = GA1_1()
-    if final_resp == "GA1_2":
+    elif "GA1_2"in final_resp:
         result = GA1_2()
-    if final_resp == "GA1_3":
+    elif "GA1_3"in final_resp:
         result = GA1_3(file_location)
-    if final_resp == "GA1_4":
+    elif "GA1_4"in final_resp:
         result = GA1_4()
-    if final_resp == "GA1_5":
+    elif "GA1_5"in final_resp:
         result = GA1_5()
-    if final_resp == "GA1_6":
+    elif "GA1_6"in final_resp:
         result = GA1_6()
-    if final_resp == "GA1_7":
+    elif "GA1_7"in final_resp:
         result = GA1_7()
-    if final_resp == "GA1_8":
+    elif "GA1_8"in final_resp:
         csv_path = os.path.join(extract_folder, "extract.csv")
         result = GA1_8(csv_path)
-    if final_resp == "GA1_9":
+    elif "GA1_9"in final_resp:
         result = GA1_9()
-    if final_resp == "GA1_10":
+    elif "GA1_10"in final_resp:
         result = GA1_10()
-    if final_resp == "GA1_11":
+    elif "GA1_11"in final_resp:
         result = GA1_11()
-    if final_resp == "GA1_12":
+    elif "GA1_12"in final_resp:
         result = GA1_12()
-    if final_resp == "GA1_13":
+    elif "GA1_13"in final_resp:
         result = GA1_13()
-    if final_resp == "GA1_14":
+    elif "GA1_14"in final_resp:
         file_0 = os.path.join(extract_folder, "file0.txt")
         file_1 = os.path.join(extract_folder, "file1.txt")
         file_2 = os.path.join(extract_folder, "file2.txt")
@@ -132,13 +135,13 @@ async def root(
         file_8 = os.path.join(extract_folder, "file8.txt")
         file_9 = os.path.join(extract_folder, "file9.txt")
         result = GA1_14(file_0, file_1, file_2, file_3, file_4, file_5, file_6, file_7, file_8,file_9)
-    if final_resp == "GA1_15":
+    elif "GA1_15"in final_resp:
         result = GA1_15()
-    if final_resp == "GA1_16":
+    elif "GA1_16"in final_resp:
         result = GA1_16()
-    if final_resp == "GA1_17":
+    elif "GA1_17"in final_resp:
         result = GA1_17()
-    if final_resp == "GA1_18":
+    elif "GA1_18"in final_resp:
         result = GA1_18()
 
     return {

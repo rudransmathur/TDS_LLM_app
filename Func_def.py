@@ -17,12 +17,12 @@ schema = {
 GA1_functions = [
     {
         "name":"GA1_1",
-        "description":"Install and run Visual Studio Code. In your Terminal (or Command Prompt), type code -s and press Enter. Copy and paste the entire output below. What is the output of code -s?",
+        "description":"Install and run Visual Studio Code. In your Terminal (or Command Prompt)",
         "parameters": schema
     },
     {
         "name":"GA1_2",
-        "description":"Send a HTTPS request to https://httpbin.org/get with the URL encoded parameter email set to 23f2004395@ds.study.iitm.ac.in. What is the JSON output of the command?",
+        "description":"Send a HTTPS request to https://httpbin.org/get",
         "parameters": schema
     },
     {
