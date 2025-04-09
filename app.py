@@ -4,10 +4,12 @@ import shutil
 from dotenv import load_dotenv
 import requests
 import os
+import base64
 
 from Func_def import *
 
 from GA1 import *
+from GA2 import *
 
 UPLOAD_FOLDER = "uploads"
 app = FastAPI()
@@ -143,6 +145,43 @@ async def root(
         result = GA1_8(csv_path)
     elif "GA1_9"in final_resp:
         result = GA1_9()
+    elif "GA1_10"in final_resp:
+        result = GA1_10()
+    elif "GA1_11"in final_resp:
+        result = GA1_11()
+    elif "GA1_12"in final_resp:
+        result = GA1_12()
+    elif "GA1_13"in final_resp:
+        result = GA1_13()
+    elif "GA1_14"in final_resp:
+        result = GA1_14()
+    elif "GA1_15"in final_resp:
+        result = GA1_15()
+    elif "GA1_16"in final_resp:
+        result = GA1_16()
+    elif "GA1_17"in final_resp:
+        result = GA1_17()
+    elif "GA1_18"in final_resp:
+        result = GA1_18()
+    elif "GA2_1"in final_resp:
+        result = GA2_1()
+    elif "GA2_2"in final_resp:
+        file_path = "uploads/image.webp"
+        with open(file_path, "rb") as file:
+            file_content = file.read()
+        result = base64.b64encode(file_content).decode("utf-8")
+    elif "GA2_3"in final_resp:
+        result = GA2_3()
+    elif "GA2_4"in final_resp:
+        result = GA2_4()
+    elif "GA2_5"in final_resp:
+        result = GA2_5()
+    elif "GA2_6"in final_resp:
+        result = GA2_6()
+    elif "GA2_7"in final_resp:
+        result = GA2_7()
+    elif "GA2_8"in final_resp:
+        result = GA2_8()
 
     return {"answer": result}
 
