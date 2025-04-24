@@ -5,21 +5,6 @@
 GitHub Repository: [github.com/rudransmathur/TDS_LLM_app](https://github.com/rudransmathur/TDS_LLM_app)  
 API Endpoint: [https://tds-proj-2-seven.vercel.app/api](https://tds-proj-2-seven.vercel.app/api/)
 
-## API Proxy Token Setup
-
-To use the application, you must provide your own API Proxy token for authentication with the LLM service.
-
-1. **Create a `.env` file in your project root directory.**
-2. **Add the following line, replacing `yourapiproxytoken` with your actual token:**
-
-    ```
-    API_PROXY_TOKEN=yourapiproxytoken
-    ```
-
-> **Note:**  
-> - Keep your `.env` file private and **never commit it to version control** (e.g., GitHub).
-> - The application will automatically load this token from the `.env` file at runtime.
-
 ## API Endpoint Usage
 
 The API endpoint accepts **POST** requests at:
