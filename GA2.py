@@ -83,11 +83,14 @@ def GA2_4():
 def GA2_5():
     return 236952
 
-def GA2_6():
-    return
+def GA2_6(path):
+    return "https://vercel-assignment-snowy.vercel.app/api"
 
 def GA2_7():
     return "https://github.com/23f2004395/Assignment_3_2"
 
 def GA2_8():
     return "https://hub.docker.com/repository/docker/rudranshmathur/try-docker-image/general"
+
+def GA2_9():
+    return "http://127.0.0.1:8000/api"
